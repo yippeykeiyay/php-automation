@@ -1,0 +1,12 @@
+{
+    "require": {
+        "php-webdriver/webdriver": "1.8.0",
+        "rapidspike/php-browsermob-proxy": "1.2.2",
+        "rapidspike/rapidspike-utils": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\Library\\": "application\\library"
+        }
+    }
+}
