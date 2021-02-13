@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Application\\Library\\": "source\\Application\\Library"
+            "Application\\": "source\\Application"
         }
     }
 }
