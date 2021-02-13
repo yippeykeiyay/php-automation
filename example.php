@@ -44,8 +44,5 @@ try {
     if ($path) {
         Utils::out($path);
     }
-
-    // Close the browser
-    $Test->getRemoteWebDriver()->quit();
 }
 
