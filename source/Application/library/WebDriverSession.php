@@ -1,14 +1,11 @@
 <?php
 
-
 namespace Application\Library;
-
 
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverDimension;
 use Facebook\WebDriver\WebDriverPoint;
 use RapidSpike\Targets\Url;
-
 
 /**
  * Class WebDriverSession
@@ -24,7 +21,11 @@ class WebDriverSession
      * @param int $timeout_seconds
      * @return RemoteWebDriver
      */
-    public static function generate(Url $Url, WebDriverSettings $WebDriverSettings, ViewPort $ViewPort, int $timeout_seconds): RemoteWebDriver
+    public static function generate(
+        Url $Url, WebDriverSettings
+        $WebDriverSettings,
+        ViewPort $ViewPort,
+        int $timeout_seconds): RemoteWebDriver
     {
         $timeout_ms = ($timeout_seconds * 1000) + 500;
 
@@ -37,10 +38,10 @@ class WebDriverSession
             $Driver->manage()->timeouts()->implicitlyWait($timeout_seconds);
         } catch (\Exception $e) {
             Utils::out("Remote WebDriver Error! {$e->getMessage()}");
-//            print_r($e);
             exit;
         }
 
         return $Driver;
     }
+
 }

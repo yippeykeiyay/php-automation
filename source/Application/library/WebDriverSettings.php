@@ -1,13 +1,10 @@
 <?php
 
-
 namespace Application\Library;
-
 
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Chrome\ChromeOptions as WDChromeOptions;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
-
 
 /**
  * Class WebDriverSettings
@@ -72,7 +69,6 @@ class WebDriverSettings
             Utils::out('WebDriver settings generated');
         } catch (\Exception $e) {
             Utils::out("WebDriver Settings Error! {$e->getMessage()}");
-//            print_r($e);
             exit;
         }
 

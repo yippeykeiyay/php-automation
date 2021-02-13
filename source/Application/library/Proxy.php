@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Application\Library;
-
 
 use RapidSpike\BrowserMobProxy\Client;
 use RapidSpike\Targets\Url;
@@ -38,7 +36,6 @@ class Proxy
             $this->Client = $Client;
         } catch (\Exception $e) {
             Utils::out("Proxy Error! {$e->getMessage()}");
-//            print_r($e);
             exit;
         }
     }

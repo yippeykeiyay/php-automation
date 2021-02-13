@@ -1,11 +1,8 @@
 <?php
 
-
 namespace Application\Library;
 
-
 use Facebook\WebDriver\Chrome\ChromeOptions as __ChromeOptions;
-
 
 /**
  * Class ChromeOptions
@@ -49,6 +46,18 @@ class ChromeOptions
     }
 
     /**
+     * @param array $arrOptions
+     */
+    public function addOptions(array $arrOptions = []): ChromeOptions
+    {
+        foreach ($arrOptions as $option) {
+            $this->addOption($option);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return __ChromeOptions
      */
     public function model(): __ChromeOptions
@@ -61,10 +70,10 @@ class ChromeOptions
             Utils::out("Chrome options modeled");
         } catch (\Exception $e) {
             Utils::out("Chrome Settings Error! {$e->getMessage()}");
-//            print_r($e);
             exit;
         }
 
         return $ChromeOptions;
     }
+
 }
