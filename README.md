@@ -45,7 +45,7 @@ This launches a server that is then used for launching proxy instances for recor
 
 # Test
 
-To test the setup, run my example script from the application directory:
+To test the setup, run my example script:
 ```
 php example.php
 ```
