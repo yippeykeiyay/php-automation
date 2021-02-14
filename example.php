@@ -7,6 +7,9 @@ use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 
 // @TODO create a config class to send to the TestStrap construct
+// @TODO make the HAR and proxy optional
+// @TODO add ability to set things from the command line
+
 $Test = new Application\TestStrap();
 
 /*
