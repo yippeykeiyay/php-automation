@@ -6,46 +6,50 @@ use Application\Library\Utils;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 
-// @TODO create a config class to send to the TestStrap construct
-// @TODO make the HAR and proxy optional
-// @TODO add ability to set things from the command line
-
-$Test = new Application\TestStrap();
+$TestConfig = Application\TestConfig::__initFromArgs($argv);
+$TestStrap = new Application\TestStrap($TestConfig);
 
 /*
  * Run the actual test
  */
 try {
-    $Test->buildEnvironment();
+    $TestStrap->buildEnvironment();
 
-    Utils::out("Opening a HAR");
-    $Test->getProxy()->newHar('https://www.tyler-architect.co.uk/');
+    if (true === $TestConfig->isRecordingHars()) {
+        Utils::out("Opening a HAR");
+        $TestStrap->getProxy()->newHar('https://www.tyler-architect.co.uk/');
+    }
 
     Utils::out("Loading page");
-    $Test->getRemoteWebDriver()->get('https://www.tyler-architect.co.uk/');
-    Utils::rest(1);
+    $TestStrap->getRemoteWebDriver()->get('https://www.tyler-architect.co.uk/');
 
-    // Wait for the iFrame to load
+    // Wait for something to load
     Utils::out("Waiting for the something to be visible");
-    $Test->getRemoteWebDriver()->wait($Test->timeout_seconds)->until(
+    $TestStrap->getRemoteWebDriver()->wait($TestConfig->getTimeoutSeconds())->until(
         WebDriverExpectedCondition::visibilityOfElementLocated(
             WebDriverBy::cssSelector('figure.logo')
         )
     );
 
+    if (true === $TestConfig->isRecordingScreenshots()) {
+        // Take a screenshot
+        $TestStrap->takeScreenshot();
+    }
+
     // Print the title and URI of the current page
-    Utils::out("The title is {$Test->getRemoteWebDriver()->getTitle()}");
-    Utils::out("The current URI is {$Test->getRemoteWebDriver()->getCurrentURL()}");
+    Utils::out("The title is {$TestStrap->getRemoteWebDriver()->getTitle()}");
+    Utils::out("The current URI is {$TestStrap->getRemoteWebDriver()->getCurrentURL()}");
 
 } catch (Exception $e) {
     Utils::out("Running Error! {$e->getMessage()}");
-    //    print_r($e);
 
 } finally {
     // Store the HAR
-    $path = $Test->getProxy()->storeHar(__DIR__ . '/output/hars/', 'tyler-architect');
-    if ($path) {
-        Utils::out($path);
+    if (true === $TestConfig->isRecordingHars()) {
+        $path = $TestStrap->storeHar();
+        if ($path) {
+            Utils::out($path);
+        }
     }
 }
 
