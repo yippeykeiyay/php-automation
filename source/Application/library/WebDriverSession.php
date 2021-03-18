@@ -21,7 +21,7 @@ class WebDriverSession
      * @param int $timeout_seconds
      * @return RemoteWebDriver
      */
-    public static function generate(
+    public static function __init(
         Url $Url, WebDriverSettings
         $WebDriverSettings,
         ViewPort $ViewPort,
@@ -30,7 +30,7 @@ class WebDriverSession
         $timeout_ms = ($timeout_seconds * 1000) + 500;
 
         try {
-            $Driver = RemoteWebDriver::create($Url->getUrl(), $WebDriverSettings->generate(), $timeout_ms, $timeout_ms);
+            $Driver = RemoteWebDriver::create($Url->getUrl(), $WebDriverSettings->__init(), $timeout_ms, $timeout_ms);
             $Driver->manage()->window()->setPosition(new WebDriverPoint($ViewPort->pos_x, $ViewPort->pos_y));
             $Driver->manage()->window()->setSize(new WebDriverDimension($ViewPort->width, $ViewPort->height));
             $Driver->manage()->deleteAllCookies();

@@ -53,7 +53,7 @@ class WebDriverSettings
     /**
      * @return DesiredCapabilities
      */
-    public function generate(): DesiredCapabilities
+    public function __init(): DesiredCapabilities
     {
         try {
             // Add Chrome Options
