@@ -25,7 +25,7 @@ class ChromeOptions
         '--allow-running-insecure-content',
         '--disable-infobars',
         '--disable-web-security',
-        '--disable-translate'
+        '--disable-translate',
     ];
 
     /**
@@ -34,7 +34,7 @@ class ChromeOptions
      */
     public function addOption(string $option = null): ChromeOptions
     {
-        if ($option !== null) {
+        if (!empty($option)) {
             if (substr($option, 0, 2) !== '--') {
                 $option = "--{$option}";
             }
