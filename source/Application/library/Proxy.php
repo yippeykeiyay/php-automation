@@ -57,12 +57,11 @@ class Proxy
     }
 
     /**
-     * @param string $file_directory
+     * @param string $file_location
      * @return false|string
      */
-    public function storeHar(string $file_directory, string $identifier)
+    public function storeHar(string $file_location)
     {
-        $file_location = "{$file_directory}har-{$identifier}-" . date('Ymd-His') . ".json";
         $arrHarData = $this->getClient()->har;
         return (file_put_contents($file_location, json_encode($arrHarData, JSON_PRETTY_PRINT)) !== false) ? $file_location : false;
     }

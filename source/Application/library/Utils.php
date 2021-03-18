@@ -28,4 +28,14 @@ class Utils
         sleep($time);
     }
 
+    /**
+     * @param string $file_directory
+     * @param string $identifier
+     * @param string $type
+     * @return string
+     */
+    public static function genFileLocation(string $file_directory, string $identifier, string $type): string
+    {
+        return sprintf("%s%s-%s.%s", $file_directory, $identifier, date('Ymd-His'), $type);
+    }
 }

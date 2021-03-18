@@ -131,4 +131,22 @@ class TestStrap
         return $WebDriverSettings;
     }
 
+    /**
+     * Takes a screenshot and stores it somewhere useful
+     */
+    public function takeScreenshot(): void
+    {
+        $file_location = Utils::genFileLocation(__DIR__ . '/../../output/screenshots/', $this->TestConfig->getTestIdentifier(), 'jpg');
+        $this->getRemoteWebDriver()->takeScreenshot($file_location);
+    }
+
+    /**
+     * Takes a HAR and stores it somewhere useful
+     */
+    public function storeHar(): void
+    {
+        $file_location = Utils::genFileLocation(__DIR__ . '/../../output/hars/', $this->TestConfig->getTestIdentifier(), 'json');
+        $this->getProxy()->storeHar($file_location);
+    }
+
 }
