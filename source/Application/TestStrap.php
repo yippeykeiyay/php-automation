@@ -29,6 +29,11 @@ class TestStrap
     private static $_start = null;
 
     /**
+     * @var TestConfig
+     */
+    private $TestConfig;
+
+    /**
      * @var Proxy
      */
     protected $Proxy;
@@ -38,21 +43,14 @@ class TestStrap
      */
     protected $RemoteWebDriver;
 
-    public $timeout_seconds = 45;
-    public $res_width = 1920;
-    public $res_height = 1080;
-    public $vp_width = 1440;
-    public $vp_height = 900;
-    public $proxy_url = 'http://localhost:8080';
-    public $selenium_url = 'http://localhost:4444/wd/hub';
-
     /**
      * TestStrap constructor.
      * Start the timer.
      */
-    public function __construct()
+    public function __construct(TestConfig $TestConfig)
     {
         self::$_start = microtime(true);
+        $this->TestConfig = $TestConfig;
     }
 
     /**
@@ -62,7 +60,10 @@ class TestStrap
     {
         $run_time_s = round((microtime(true) - self::$_start), 3, PHP_ROUND_HALF_UP);
         Utils::out("Completed in {$run_time_s} seconds");
-        $this->getRemoteWebDriver()->quit();
+
+        if ($this->RemoteWebDriver instanceof RemoteWebDriver) {
+            $this->RemoteWebDriver->quit();
+        }
     }
 
     /**
@@ -84,24 +85,24 @@ class TestStrap
     /**
      * Build the test environment using some Chrome options if provided
      *
-     * @param array $arrChromeOptions
-     *
      * @return $this
      */
-    public function buildEnvironment(array $arrChromeOptions = []): TestStrap
+    public function buildEnvironment(): TestStrap
     {
-        // Setup a Proxy Client
-        $this->Proxy = new Proxy(new Url($this->proxy_url));
+        if (true === $this->TestConfig->isRecordingHars()) {
+            // Setup a Proxy Client
+            $this->Proxy = new Proxy(new Url($this->TestConfig::PROXY_URL));
+        }
 
         // Window resolution settings
-        $Resolution = new Resolution($this->res_width, $this->res_height);
+        $Resolution = new Resolution($this->TestConfig->getResWidth(), $this->TestConfig->getResHeight());
 
         // Start the remote session
-        $this->RemoteWebDriver = WebDriverSession::generate(
-            new Url($this->selenium_url),
-            $this->_buildWebDriverSettings((new ChromeOptions)->addOptions($arrChromeOptions), $Resolution),
-            new ViewPort($this->vp_width, $this->vp_height, $Resolution),
-            $this->timeout_seconds
+        $this->RemoteWebDriver = WebDriverSession::__init(
+            new Url($this->TestConfig::SELENIUM_URL),
+            $this->_buildWebDriverSettings((new ChromeOptions)->addOptions($this->TestConfig->getChromeOptions()), $Resolution),
+            new ViewPort($this->TestConfig->getVpWidth(), $this->TestConfig->getVpHeight(), $Resolution),
+            $this->TestConfig->getTimeoutSeconds()
         );
 
         return $this;
@@ -121,12 +122,10 @@ class TestStrap
         // Setup WebDriver
         $WebDriverSettings = new WebDriverSettings($ChromeOptions, $Resolution);
 
-        // Apply a proxy
-        $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, [
-            'proxyType' => 'manual',
-            'httpProxy' => $this->Proxy->getClient()->url,
-            'sslProxy' => $this->Proxy->getClient()->url
-        ]);
+        if ($this->Proxy instanceof Proxy) {
+            // Apply a proxy
+            $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, ['proxyType' => 'manual', 'httpProxy' => $this->Proxy->getClient()->url, 'sslProxy' => $this->Proxy->getClient()->url]);
+        }
 
         return $WebDriverSettings;
     }
