@@ -47,5 +47,5 @@ This launches a server that is then used for launching proxy instances for recor
 
 To test the setup, run my example script:
 ```
-php example.php
+php example.php --recording_hars --recording_screenshots --add-option=headless --test_identifier=tyler-architects
 ```
