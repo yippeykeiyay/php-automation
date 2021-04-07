@@ -15,13 +15,15 @@ $TestStrap = new Application\TestStrap($TestConfig);
 try {
     $TestStrap->buildEnvironment();
 
+    $start_url = 'https://www.tesco.com/groceries/en-GB/';
+
     if (true === $TestConfig->isRecordingHars()) {
         Utils::out("Opening a HAR");
-        $TestStrap->getProxy()->newHar('https://www.tyler-architect.co.uk/');
+        $TestStrap->getProxy()->newHar($start_url);
     }
 
     Utils::out("Loading page");
-    $TestStrap->getRemoteWebDriver()->get('https://www.tyler-architect.co.uk/');
+    $TestStrap->getRemoteWebDriver()->get($start_url);
 
     // Wait for something to load
     Utils::out("Waiting for the something to be visible");
