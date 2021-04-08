@@ -57,7 +57,13 @@ class TestStrap
         Utils::out("Completed in {$run_time_s} seconds");
 
         if ($this->RemoteWebDriver instanceof RemoteWebDriver) {
+            // Quit the Selenium and browser session
             $this->RemoteWebDriver->quit();
+        }
+
+        if ($this->Proxy instanceof Proxy) {
+            // Close the proxy client
+            $this->Proxy->getClient()->close();
         }
     }
 
