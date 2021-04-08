@@ -1,17 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application;
 
-use Application\Library\ChromeOptions;
-use Application\Library\Proxy;
-use Application\Library\Resolution;
-use Application\Library\Utils;
-use Application\Library\ViewPort;
-use Application\Library\WebDriverSession;
-use Application\Library\WebDriverSettings;
-use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Facebook\WebDriver\Remote\WebDriverCapabilityType;
 use RapidSpike\Targets\Url;
+use Application\Library\{ChromeOptions, Proxy, Resolution, Utils, ViewPort, WebDriverSession, WebDriverSettings};
+use Facebook\WebDriver\Remote\{RemoteWebDriver, WebDriverCapabilityType};
 
 date_default_timezone_set('UTC');
 
@@ -98,7 +93,7 @@ class TestStrap
         $Resolution = new Resolution($this->TestConfig->getResWidth(), $this->TestConfig->getResHeight());
 
         // Start the remote session
-        $this->RemoteWebDriver = WebDriverSession::__init(
+        $this->RemoteWebDriver = WebDriverSession::init(
             new Url($this->TestConfig::SELENIUM_URL),
             $this->_buildWebDriverSettings((new ChromeOptions)->addOptions($this->TestConfig->getChromeOptions()), $Resolution),
             new ViewPort($this->TestConfig->getVpWidth(), $this->TestConfig->getVpHeight(), $Resolution),
@@ -135,7 +130,7 @@ class TestStrap
      */
     public function takeScreenshot(): void
     {
-        $file_location = Utils::genFileLocation(__DIR__ . '/../../output/screenshots/', $this->TestConfig->getTestIdentifier(), 'jpg');
+        $file_location = Utils::generateFileLocation(__DIR__ . '/../../output/screenshots/', $this->TestConfig->getTestIdentifier(), 'jpg');
         $this->getRemoteWebDriver()->takeScreenshot($file_location);
     }
 
@@ -144,7 +139,7 @@ class TestStrap
      */
     public function storeHar(): void
     {
-        $file_location = Utils::genFileLocation(__DIR__ . '/../../output/hars/', $this->TestConfig->getTestIdentifier(), 'json');
+        $file_location = Utils::generateFileLocation(__DIR__ . '/../../output/hars/', $this->TestConfig->getTestIdentifier(), 'json');
         $this->getProxy()->storeHar($file_location);
     }
 

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Library;
 
-use Facebook\WebDriver\Chrome\ChromeOptions as __ChromeOptions;
+use Facebook\WebDriver\Chrome\ChromeOptions as WebDriverChromeOptions;
 
 /**
  * Class ChromeOptions
@@ -12,6 +14,7 @@ class ChromeOptions
 {
 
     /**
+     * Default options
      * @var string[]
      */
     private $arrOptions = [
@@ -29,6 +32,7 @@ class ChromeOptions
     ];
 
     /**
+     * Add an option either with or without the "--" at the start
      * @param string|null $option
      * @return $this
      */
@@ -46,6 +50,7 @@ class ChromeOptions
     }
 
     /**
+     * Add a set of options
      * @param array $arrOptions
      */
     public function addOptions(array $arrOptions = []): ChromeOptions
@@ -58,12 +63,14 @@ class ChromeOptions
     }
 
     /**
-     * @return __ChromeOptions
+     * Basically create a proper WebDriverChromeOptions
+     * object out of the options applied to this class
+     * @return WebDriverChromeOptions
      */
-    public function model(): __ChromeOptions
+    public function model(): WebDriverChromeOptions
     {
         try {
-            $ChromeOptions = new __ChromeOptions();
+            $ChromeOptions = new WebDriverChromeOptions();
             $ChromeOptions->setExperimentalOption('w3c', false);
             $ChromeOptions->addArguments($this->arrOptions);
 

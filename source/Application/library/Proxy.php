@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Library;
 
 use RapidSpike\BrowserMobProxy\Client;
@@ -36,11 +38,12 @@ class Proxy
             $this->Client = $Client;
         } catch (\Exception $e) {
             Utils::out("Proxy Error! {$e->getMessage()}");
-            exit;
+            exit(1);
         }
     }
 
     /**
+     * Get the proxy Client object
      * @return Client
      */
     public function getClient(): Client
@@ -49,6 +52,7 @@ class Proxy
     }
 
     /**
+     * Create a new HAR in the proxy
      * @param string $title
      */
     public function newHar(string $title): void
@@ -57,6 +61,7 @@ class Proxy
     }
 
     /**
+     * Store an existing HAR
      * @param string $file_location
      * @return false|string
      */

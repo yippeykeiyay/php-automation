@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Library;
 
-use Facebook\WebDriver\Remote\DesiredCapabilities;
-use Facebook\WebDriver\Chrome\ChromeOptions as WDChromeOptions;
-use Facebook\WebDriver\Remote\WebDriverCapabilityType;
+use Facebook\WebDriver\Remote\{DesiredCapabilities, WebDriverCapabilityType};
+use Facebook\WebDriver\Chrome\ChromeOptions as WebDriverChromeOptions;
 
 /**
  * Class WebDriverSettings
@@ -42,22 +43,24 @@ class WebDriverSettings
     }
 
     /**
+     * Set a capability to the settings object
      * @param mixed $name
      * @param mixed $value
      */
-    public function setCapability($name, $value)
+    public function setCapability($name, $value): void
     {
         $this->WebDriverSettings->setCapability($name, $value);
     }
 
     /**
+     * Instantiates and returns a new instance of the Desired Capabilities with the required settings
      * @return DesiredCapabilities
      */
-    public function __init(): DesiredCapabilities
+    public function generateDesiredCapabilities(): DesiredCapabilities
     {
         try {
             // Add Chrome Options
-            $this->WebDriverSettings->setCapability(WDChromeOptions::CAPABILITY, $this->ChromeOptions->model());
+            $this->WebDriverSettings->setCapability(WebDriverChromeOptions::CAPABILITY, $this->ChromeOptions->model());
 
             // Add some session settings
             $this->WebDriverSettings->setCapability('screenResolution', $this->Resolution->asString());
@@ -69,7 +72,7 @@ class WebDriverSettings
             Utils::out('WebDriver settings generated');
         } catch (\Exception $e) {
             Utils::out("WebDriver Settings Error! {$e->getMessage()}");
-            exit;
+            exit(1);
         }
 
         return $this->WebDriverSettings;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Library;
 
 /**
@@ -33,6 +35,7 @@ class Resolution
     }
 
     /**
+     * Turn the resolution setting into a nicely formatted string
      * @return string
      */
     public function asString(): string
