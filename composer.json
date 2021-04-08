@@ -1,7 +1,7 @@
 {
     "require": {
         "php-webdriver/webdriver": "1.8.0",
-        "rapidspike/php-browsermob-proxy": "1.2.2",
+        "rapidspike/php-browsermob-proxy": "1.2.3",
         "rapidspike/rapidspike-utils": "dev-master"
     },
     "autoload": {

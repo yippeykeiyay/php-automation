@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "216b99e73cc122a4d3834f52c314056e",
+    "content-hash": "2f3801e5c336dd4aef14d914fe29f46f",
     "packages": [
         {
             "name": "php-webdriver/webdriver",
@@ -73,16 +73,16 @@
         },
         {
             "name": "rapidspike/php-browsermob-proxy",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RapidSpike/php-browsermob-proxy.git",
-                "reference": "dcc1bee776645fa05e0b4036fef4b48ee8523d19"
+                "reference": "20e45a498ff56f5eb38139b9200a7a04587153dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RapidSpike/php-browsermob-proxy/zipball/dcc1bee776645fa05e0b4036fef4b48ee8523d19",
-                "reference": "dcc1bee776645fa05e0b4036fef4b48ee8523d19",
+                "url": "https://api.github.com/repos/RapidSpike/php-browsermob-proxy/zipball/20e45a498ff56f5eb38139b9200a7a04587153dd",
+                "reference": "20e45a498ff56f5eb38139b9200a7a04587153dd",
                 "shasum": ""
             },
             "require": {
@@ -112,7 +112,7 @@
                 "proxy",
                 "testing"
             ],
-            "time": "2019-09-30T09:13:24+00:00"
+            "time": "2021-04-07T21:54:41+00:00"
         },
         {
             "name": "rapidspike/rapidspike-utils",
@@ -192,16 +192,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "f377a3dd1fde44d37b9831d68dc8dea3ffd28e13"
+                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f377a3dd1fde44d37b9831d68dc8dea3ffd28e13",
-                "reference": "f377a3dd1fde44d37b9831d68dc8dea3ffd28e13",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/5232de97ee3b75b0360528dae24e73db49566ab1",
+                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1",
                 "shasum": ""
             },
             "require": {
@@ -251,11 +251,11 @@
                 "portable",
                 "shim"
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "time": "2021-01-22T09:19:47+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
@@ -321,7 +321,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
