@@ -3,8 +3,7 @@
 require_once(__DIR__ . '/vendor/autoload.php');
 
 use Application\Library\Utils;
-use Facebook\WebDriver\WebDriverBy;
-use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\{WebDriverBy, WebDriverExpectedCondition};
 
 $TestConfig = Application\TestConfig::__initFromArgs($argv);
 $TestStrap = new Application\TestStrap($TestConfig);
@@ -15,7 +14,7 @@ $TestStrap = new Application\TestStrap($TestConfig);
 try {
     $TestStrap->buildEnvironment();
 
-    $start_url = 'https://www.tesco.com/groceries/en-GB/';
+    $start_url = 'https://www.tyler-architect.co.uk/';
 
     if (true === $TestConfig->isRecordingHars()) {
         Utils::out("Opening a HAR");
@@ -44,6 +43,7 @@ try {
 
 } catch (Exception $e) {
     Utils::out("Running Error! {$e->getMessage()}");
+    exit(1);
 
 } finally {
     // Store the HAR
