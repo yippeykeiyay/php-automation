@@ -122,10 +122,16 @@ class TestStrap
     {
         // Setup WebDriver
         $WebDriverSettings = new WebDriverSettings($ChromeOptions, $Resolution);
+        $WebDriverSettings->setCapability('pageLoadStrategy', 'none');
 
         if ($this->Proxy instanceof Proxy) {
             // Apply a proxy
-            $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, ['proxyType' => 'manual', 'httpProxy' => $this->Proxy->getClient()->url, 'sslProxy' => $this->Proxy->getClient()->url]);
+            $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, [
+                'proxyType' => 'manual',
+                'httpProxy' => $this->Proxy->getClient()->url,
+                'sslProxy' => $this->Proxy->getClient()->url,
+//                'noProxy' =>
+            ]);
         }
 
         return $WebDriverSettings;
