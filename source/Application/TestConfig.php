@@ -7,8 +7,13 @@ namespace Application;
 class TestConfig
 {
 
-    const PROXY_URL = 'http://localhost:8080';
-    const SELENIUM_URL = 'http://localhost:4444/wd/hub';
+    public const PROXY_URL = 'http://localhost:8080';
+    public const SELENIUM_URL = 'http://localhost:4444/wd/hub';
+
+    /**
+     * @var array
+     */
+    public $arg_store = [];
 
     /**
      * @var bool
@@ -74,6 +79,7 @@ class TestConfig
             $val = null;
             if (strpos($arg, '=') !== false) {
                 list($key, $val) = explode('=', $arg);
+                $TestConfig->arg_store[$key] = $val;
             }
 
             if (property_exists($TestConfig, $key) || $key === 'add-option') {
@@ -94,6 +100,9 @@ class TestConfig
                         // Dynamically handle the other arguments
                         $method = self::transformStringToMethod($key);
                         if (method_exists($TestConfig, $method)) {
+                            if (is_numeric($val)) {
+                                $val = (int) $val;
+                            }
                             $TestConfig->{$method}($val);
                         }
                 }
