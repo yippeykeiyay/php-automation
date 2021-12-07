@@ -1,3 +1,12 @@
+# Prerequisites
+
+ * [Brew](https://brew.sh/)
+ * Composer - `brew install composer`
+ * PHP 7.4
+    * I use brew to manage PHP versions - `brew install php@7.4` then `brew unlink php@<version>` and `brew link php@7.4` to install 7.4 then replace whichever version you have with 7.4
+ * [Java](https://www.java.com/en/)
+
+
 # Install Things
 
 ## Dependencies
