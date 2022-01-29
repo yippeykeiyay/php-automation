@@ -42,7 +42,12 @@ try {
     Utils::out("The current URI is {$TestStrap->getRemoteWebDriver()->getCurrentURL()}");
 
 } catch (Exception $e) {
-    Utils::out("Running Error! {$e->getMessage()}");
+    Utils::out(
+        PHP_EOL . " | Running Error!" . PHP_EOL . " | {$e->getFile()} ({$e->getLine()})"
+    );
+    Utils::out(
+        " | " . implode(PHP_EOL . " | ", array_filter(explode(PHP_EOL, $e->getMessage()))) . PHP_EOL
+    );
     exit(1);
 
 } finally {
