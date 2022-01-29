@@ -8,6 +8,7 @@ use RapidSpike\Targets\Url;
 use Application\Library\{WebDriverSession, Utils};
 use Application\Library\Model\{ChromeOptions, Proxy, Resolution, ViewPort, WebDriverSettings};
 use Facebook\WebDriver\Remote\{RemoteWebDriver, WebDriverCapabilityType};
+use Facebook\WebDriver\Chrome\ChromeDevToolsDriver;
 
 date_default_timezone_set('UTC');
 
@@ -32,12 +33,17 @@ class TestStrap
     /**
      * @var ?Proxy
      */
-    protected ?Proxy $Proxy = null;
+    private ?Proxy $Proxy = null;
 
     /**
      * @var RemoteWebDriver
      */
-    protected RemoteWebDriver $RemoteWebDriver;
+    private RemoteWebDriver $RemoteWebDriver;
+
+    /**
+     * @var ChromeDevToolsDriver
+     */
+    private ChromeDevToolsDriver $DevTools;
 
     /**
      * TestStrap constructor.
@@ -85,6 +91,14 @@ class TestStrap
     }
 
     /**
+     * @return ChromeDevToolsDriver
+     */
+    public function getDevTools(): ChromeDevToolsDriver
+    {
+        return $this->DevTools;
+    }
+
+    /**
      * Build the test environment using some Chrome options if provided
      *
      * @return $this
@@ -123,6 +137,8 @@ class TestStrap
             $ViewPort,
             $this->TestConfig->getTimeoutSeconds()
         );
+
+        $this->DevTools = new ChromeDevToolsDriver($this->RemoteWebDriver);
 
         return $this;
     }
