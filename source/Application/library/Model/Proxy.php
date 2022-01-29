@@ -2,25 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Application\Library;
+namespace Application\Library\Model;
 
+use Application\Library\Utils;
+use Exception;
 use RapidSpike\BrowserMobProxy\Client;
 use RapidSpike\Targets\Url;
 
 /**
  * Class Proxy
- * @package Application\Library
+ * @package Application\Library\Model
  */
 class Proxy
 {
 
     const TIMEOUT = 30;
-    const HOST = 'localhost:8080';
 
     /**
      * @var Client
      */
-    private $Client;
+    private Client $Client;
 
     /**
      * Proxy constructor.
@@ -33,10 +34,10 @@ class Proxy
             $Client->open('trustAllServers=true&useEcc=true');
             $Client->timeouts(['connection' => self::TIMEOUT, 'request' => self::TIMEOUT]);
 
-            Utils::out("Proxy started on {$Client->url}");
+            Utils::out("Proxy started on $Client->url)");
 
             $this->Client = $Client;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Utils::out("Proxy Error! {$e->getMessage()}");
             exit(1);
         }
@@ -63,11 +64,11 @@ class Proxy
     /**
      * Store an existing HAR
      * @param string $file_location
-     * @return false|string
+     * @return string|false
      */
-    public function storeHar(string $file_location)
+    public function storeHar(string $file_location): string|false
     {
-        $arrHarData = $this->getClient()->har;
+        $arrHarData = $this->getClient()->url;
         return (file_put_contents($file_location, json_encode($arrHarData, JSON_PRETTY_PRINT)) !== false) ? $file_location : false;
     }
 

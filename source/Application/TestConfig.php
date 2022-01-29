@@ -13,54 +13,55 @@ class TestConfig
     /**
      * @var array
      */
-    public $arg_store = [];
+    public array $arg_store = [];
 
     /**
      * @var bool
      */
-    protected $recording_hars = false;
+    protected bool $recording_hars = false;
 
     /**
      * @var bool
      */
-    protected $recording_screenshots = false;
+    protected bool $recording_screenshots = false;
 
     /**
      * @var int
      */
-    protected $timeout_seconds = 45;
+    protected int $timeout_seconds = 45;
 
     /**
      * @var int
      */
-    protected $res_width = 1920;
+    protected int $res_width = 1920;
 
     /**
      * @var int
      */
-    protected $res_height = 1080;
+    protected int $res_height = 1080;
 
     /**
      * @var int
      */
-    protected $vp_width = 1440;
+    protected int $vp_width = 1440;
 
     /**
      * @var int
      */
-    protected $vp_height = 900;
+    protected int $vp_height = 900;
 
     /**
      * @var string
      */
-    protected $test_identifier = '';
+    protected string $test_identifier = '';
 
     /**
      * @var array
      */
-    protected $arrChromeOptions = [];
+    protected array $arrChromeOptions = [];
 
     /**
+     * @param array $arguments
      * @return TestConfig
      */
     public static function __initFromArgs(array $arguments): TestConfig
@@ -68,7 +69,7 @@ class TestConfig
         $TestConfig = new static();
 
         foreach ($arguments as $arg) {
-            if (strpos($arg, '--') === false) {
+            if (!str_contains($arg, '--')) {
                 continue;
             }
 
@@ -77,7 +78,7 @@ class TestConfig
             // Some arguments will have values to set, others won't
             $key = $arg;
             $val = null;
-            if (strpos($arg, '=') !== false) {
+            if (str_contains($arg, '=')) {
                 list($key, $val) = explode('=', $arg);
                 $TestConfig->arg_store[$key] = $val;
             }

@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Application\Library;
+namespace Application\Library\Model;
+
+use Application\Library\Utils;
 
 /**
  * Class ViewPort
- * @package Application\Library
+ * @package Application\Library\Model
  */
 class ViewPort
 {
@@ -14,22 +16,22 @@ class ViewPort
     /**
      * @var int
      */
-    public $width;
+    public int $width;
 
     /**
      * @var int
      */
-    public $height;
+    public int $height;
 
     /**
      * @var int
      */
-    public $pos_x = 0;
+    public int $pos_x = 0;
 
     /**
      * @var int
      */
-    public $pos_y = 0;
+    public int $pos_y = 0;
 
     /**
      * ViewPort constructor.
@@ -49,8 +51,8 @@ class ViewPort
             $this->pos_y = 0;
         }
 
-        Utils::out("ViewPort width: {$this->width}, height: {$this->height}");
-        Utils::out("Position X: {$this->pos_x}, Y: {$this->pos_y}");
+        Utils::out("ViewPort width: $this->width, height: $this->height");
+        Utils::out("Position X: $this->pos_x, Y: $this->pos_y");
     }
 
 }

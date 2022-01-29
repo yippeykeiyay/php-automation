@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Application\Library;
+namespace Application\Library\Model;
+
+use Application\Library\Utils;
 
 /**
  * Class Resolution
- * @package Application\Library
+ * @package Application\Library\Model
  */
 class Resolution
 {
@@ -14,12 +16,12 @@ class Resolution
     /**
      * @var int
      */
-    public $width;
+    public int $width;
 
     /**
      * @var int
      */
-    public $height;
+    public int $height;
 
     /**
      * Resolution constructor.
@@ -31,7 +33,7 @@ class Resolution
         $this->width = $width;
         $this->height = $height;
 
-        Utils::out("Resolution width: {$this->width}, height: {$this->height}");
+        Utils::out("Resolution width: $this->width, height: $this->height");
     }
 
     /**

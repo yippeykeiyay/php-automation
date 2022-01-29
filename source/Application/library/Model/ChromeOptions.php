@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Application\Library;
+namespace Application\Library\Model;
 
+use Application\Library\Utils;
+use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions as WebDriverChromeOptions;
 
 /**
  * Class ChromeOptions
- * @package Application\Library
+ * @package Application\Library\Model
  */
 class ChromeOptions
 {
@@ -17,7 +19,7 @@ class ChromeOptions
      * Default options
      * @var string[]
      */
-    private $arrOptions = [
+    private array $arrOptions = [
         '--disable-dev-shm-usage',
         '--ignore-certificate-errors',
         '--test-type',
@@ -39,8 +41,8 @@ class ChromeOptions
     public function addOption(string $option = null): ChromeOptions
     {
         if (!empty($option)) {
-            if (substr($option, 0, 2) !== '--') {
-                $option = "--{$option}";
+            if (!str_starts_with($option, '--')) {
+                $option = "--$option";
             }
 
             $this->arrOptions[] = $option;
@@ -50,8 +52,8 @@ class ChromeOptions
     }
 
     /**
-     * Add a set of options
      * @param array $arrOptions
+     * @return $this
      */
     public function addOptions(array $arrOptions = []): ChromeOptions
     {
@@ -75,7 +77,7 @@ class ChromeOptions
             $ChromeOptions->addArguments($this->arrOptions);
 
             Utils::out("Chrome options modeled");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Utils::out("Chrome Settings Error! {$e->getMessage()}");
             exit;
         }

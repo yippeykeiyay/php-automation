@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Application;
 
 use RapidSpike\Targets\Url;
-use Application\Library\{ChromeOptions, Proxy, Resolution, Utils, ViewPort, WebDriverSession, WebDriverSettings};
+use Application\Library\{WebDriverSession, Utils};
+use Application\Library\Model\{ChromeOptions, Proxy, Resolution, ViewPort, WebDriverSettings};
 use Facebook\WebDriver\Remote\{RemoteWebDriver, WebDriverCapabilityType};
 
 date_default_timezone_set('UTC');
@@ -21,22 +22,22 @@ class TestStrap
     /**
      * @var float|null
      */
-    private static $_start = null;
+    private static ?float $_start = null;
 
     /**
-     * @var TestConfig
+     * @var ?TestConfig
      */
-    private $TestConfig;
+    private ?TestConfig $TestConfig = null;
 
     /**
-     * @var Proxy
+     * @var ?Proxy
      */
-    protected $Proxy;
+    protected ?Proxy $Proxy = null;
 
     /**
      * @var RemoteWebDriver
      */
-    protected $RemoteWebDriver;
+    protected RemoteWebDriver $RemoteWebDriver;
 
     /**
      * TestStrap constructor.
@@ -54,7 +55,7 @@ class TestStrap
     public function __destruct()
     {
         $run_time_s = round((microtime(true) - self::$_start), 3, PHP_ROUND_HALF_UP);
-        Utils::out("Completed in {$run_time_s} seconds");
+        Utils::out("Completed in $run_time_s seconds");
 
         if ($this->RemoteWebDriver instanceof RemoteWebDriver) {
             // Quit the Selenium and browser session
@@ -98,11 +99,28 @@ class TestStrap
         // Window resolution settings
         $Resolution = new Resolution($this->TestConfig->getResWidth(), $this->TestConfig->getResHeight());
 
+        // A class to model the ViewPort
+        $ViewPort = new ViewPort(
+            $this->TestConfig->getVpWidth(),
+            $this->TestConfig->getVpHeight(),
+            $Resolution
+        );
+
+        // WebDriver ChromeOptions
+        $ChromeOptions = new ChromeOptions;
+        $ChromeOptions->addOptions($this->TestConfig->getChromeOptions());
+
+        // The WebDriver Settings, using the ChomeOptions and Resolution class
+        $WebDriverSettings = $this->_buildWebDriverSettings($ChromeOptions, $Resolution);
+
+        // The URL of where Selenium is
+        $SeleniumUrl = new Url($this->TestConfig::SELENIUM_URL);
+
         // Start the remote session
         $this->RemoteWebDriver = WebDriverSession::init(
-            new Url($this->TestConfig::SELENIUM_URL),
-            $this->_buildWebDriverSettings((new ChromeOptions)->addOptions($this->TestConfig->getChromeOptions()), $Resolution),
-            new ViewPort($this->TestConfig->getVpWidth(), $this->TestConfig->getVpHeight(), $Resolution),
+            $SeleniumUrl,
+            $WebDriverSettings,
+            $ViewPort,
             $this->TestConfig->getTimeoutSeconds()
         );
 
@@ -111,12 +129,9 @@ class TestStrap
 
     /**
      * Build the Webdriver session's settings
-     *
      * @param ChromeOptions $ChromeOptions
-     *
      * @param Resolution $Resolution
-     *
-     * @return WebDriverSession
+     * @return WebDriverSettings
      */
     private function _buildWebDriverSettings(ChromeOptions $ChromeOptions, Resolution $Resolution): WebDriverSettings
     {
@@ -128,8 +143,8 @@ class TestStrap
             // Apply a proxy
             $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, [
                 'proxyType' => 'manual',
-                'httpProxy' => $this->Proxy->getClient()->url,
-                'sslProxy' => $this->Proxy->getClient()->url,
+                'httpProxy' => $this->Proxy->getClient()->getUrl(),
+                'sslProxy' => $this->Proxy->getClient()->getUrl(),
 //                'noProxy' =>
             ]);
         }
@@ -142,7 +157,12 @@ class TestStrap
      */
     public function takeScreenshot(): void
     {
-        $file_location = Utils::generateFileLocation(__DIR__ . '/../../output/screenshots/', $this->TestConfig->getTestIdentifier(), 'jpg');
+        $file_location = Utils::generateFileLocation(
+            __DIR__ . '/../../output/screenshots/',
+            $this->TestConfig->getTestIdentifier(),
+            'jpg'
+        );
+
         $this->getRemoteWebDriver()->takeScreenshot($file_location);
     }
 
@@ -151,7 +171,12 @@ class TestStrap
      */
     public function storeHar(): void
     {
-        $file_location = Utils::generateFileLocation(__DIR__ . '/../../output/hars/', $this->TestConfig->getTestIdentifier(), 'json');
+        $file_location = Utils::generateFileLocation(
+            __DIR__ . '/../../output/hars/',
+            $this->TestConfig->getTestIdentifier(),
+            'json'
+        );
+
         $this->getProxy()->storeHar($file_location);
     }
 

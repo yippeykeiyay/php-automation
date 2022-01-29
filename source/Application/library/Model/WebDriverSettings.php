@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Application\Library;
+namespace Application\Library\Model;
 
+use Application\Library\Utils;
 use Facebook\WebDriver\Remote\{DesiredCapabilities, WebDriverCapabilityType};
+use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions as WebDriverChromeOptions;
 
 /**
  * Class WebDriverSettings
- * @package Application\Library
+ * @package Application\Library\Model
  */
 class WebDriverSettings
 {
@@ -17,17 +19,17 @@ class WebDriverSettings
     /**
      * @var ChromeOptions
      */
-    private $ChromeOptions;
+    private ChromeOptions $ChromeOptions;
 
     /**
      * @var Resolution
      */
-    private $Resolution;
+    private Resolution $Resolution;
 
     /**
      * @var DesiredCapabilities
      */
-    private $WebDriverSettings;
+    private DesiredCapabilities $WebDriverSettings;
 
     /**
      * WebDriverSettings constructor.
@@ -47,7 +49,7 @@ class WebDriverSettings
      * @param mixed $name
      * @param mixed $value
      */
-    public function setCapability($name, $value): void
+    public function setCapability(mixed $name, mixed $value): void
     {
         $this->WebDriverSettings->setCapability($name, $value);
     }
@@ -60,7 +62,7 @@ class WebDriverSettings
     {
         try {
             // Add Chrome Options
-            $this->WebDriverSettings->setCapability(WebDriverChromeOptions::CAPABILITY, $this->ChromeOptions->model());
+            $this->WebDriverSettings->setCapability(WebDriverChromeOptions::CAPABILITY_W3C, $this->ChromeOptions->model());
 
             // Add some session settings
             $this->WebDriverSettings->setCapability('screenResolution', $this->Resolution->asString());
@@ -70,7 +72,7 @@ class WebDriverSettings
             $this->WebDriverSettings->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
 
             Utils::out('WebDriver settings generated');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Utils::out("WebDriver Settings Error! {$e->getMessage()}");
             exit(1);
         }
