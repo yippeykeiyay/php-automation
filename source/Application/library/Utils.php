@@ -13,11 +13,17 @@ class Utils
 
     /**
      * Log something
-     * @param string $msg
+     * @param string|array $msg
      */
-    public static function out(string $msg): void
+    public static function out(string|array $msg): void
     {
-        echo $msg, PHP_EOL;
+        if (is_array($msg)) {
+            print_r($msg);
+        } else {
+            echo $msg;
+        }
+
+        echo PHP_EOL;
     }
 
     /**
@@ -39,6 +45,12 @@ class Utils
      */
     public static function generateFileLocation(string $file_directory, string $identifier, string $type): string
     {
-        return sprintf("%s%s-%s.%s", $file_directory, $identifier, date('Ymd-His'), $type);
+        return sprintf(
+            "%s%s-%s.%s",
+            $file_directory,
+            $identifier,
+            date('Ymd-His'),
+            $type
+        );
     }
 }
