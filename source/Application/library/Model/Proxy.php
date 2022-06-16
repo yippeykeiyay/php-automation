@@ -34,7 +34,7 @@ class Proxy
             $Client->open('trustAllServers=true&useEcc=true');
             $Client->timeouts(['connection' => self::TIMEOUT, 'request' => self::TIMEOUT]);
 
-            Utils::out("Proxy started on $Client->url)");
+            Utils::out("Proxy started on {$Client->url}");
 
             $this->Client = $Client;
         } catch (Exception $e) {

@@ -159,8 +159,8 @@ class TestStrap
             // Apply a proxy
             $WebDriverSettings->setCapability(WebDriverCapabilityType::PROXY, [
                 'proxyType' => 'manual',
-                'httpProxy' => $this->Proxy->getClient()->getUrl(),
-                'sslProxy' => $this->Proxy->getClient()->getUrl(),
+                'httpProxy' => $this->Proxy->getClient()->url,
+                'sslProxy' => $this->Proxy->getClient()->url,
 //                'noProxy' =>
             ]);
         }
