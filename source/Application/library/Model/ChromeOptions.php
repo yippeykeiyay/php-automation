@@ -73,7 +73,7 @@ class ChromeOptions
     {
         try {
             $ChromeOptions = new WebDriverChromeOptions();
-            $ChromeOptions->setExperimentalOption('w3c', false);
+            $ChromeOptions->setExperimentalOption('w3c', true);
             $ChromeOptions->addArguments($this->arrOptions);
 
             Utils::out("Chrome options modeled");
