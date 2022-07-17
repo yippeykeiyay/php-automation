@@ -15,7 +15,7 @@ class Utils
      * Log something
      * @param string|array $msg
      */
-    public static function out(string|array $msg): void
+    public static function out(string|array $msg, $newLine = true): void
     {
         if (is_array($msg)) {
             print_r($msg);
@@ -23,7 +23,9 @@ class Utils
             echo $msg;
         }
 
-        echo PHP_EOL;
+        if ($newLine) {
+            echo PHP_EOL;
+        }
     }
 
     /**
