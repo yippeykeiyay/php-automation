@@ -132,10 +132,12 @@ class TestConfig
 
     /**
      * @param bool $recording_hars
+     * @return TestConfig
      */
-    public function setRecordingHars(bool $recording_hars): void
+    public function setRecordingHars(bool $recording_hars): TestConfig
     {
         $this->recording_hars = $recording_hars;
+        return $this;
     }
 
     /**
@@ -148,10 +150,12 @@ class TestConfig
 
     /**
      * @param bool $recording_screenshots
+     * @return TestConfig
      */
-    public function setRecordingScreenshots(bool $recording_screenshots): void
+    public function setRecordingScreenshots(bool $recording_screenshots): TestConfig
     {
         $this->recording_screenshots = $recording_screenshots;
+        return $this;
     }
 
     /**
@@ -164,10 +168,12 @@ class TestConfig
 
     /**
      * @param int $timeout_seconds
+     * @return TestConfig
      */
-    public function setTimeoutSeconds(int $timeout_seconds): void
+    public function setTimeoutSeconds(int $timeout_seconds): TestConfig
     {
         $this->timeout_seconds = $timeout_seconds;
+        return $this;
     }
 
     /**
@@ -180,10 +186,12 @@ class TestConfig
 
     /**
      * @param int $res_width
+     * @return TestConfig
      */
-    public function setResWidth(int $res_width): void
+    public function setResWidth(int $res_width): TestConfig
     {
         $this->res_width = $res_width;
+        return $this;
     }
 
     /**
@@ -196,10 +204,12 @@ class TestConfig
 
     /**
      * @param int $res_height
+     * @return TestConfig
      */
-    public function setResHeight(int $res_height): void
+    public function setResHeight(int $res_height): TestConfig
     {
         $this->res_height = $res_height;
+        return $this;
     }
 
     /**
@@ -212,10 +222,12 @@ class TestConfig
 
     /**
      * @param int $vp_width
+     * @return TestConfig
      */
-    public function setVpWidth(int $vp_width): void
+    public function setVpWidth(int $vp_width): TestConfig
     {
         $this->vp_width = $vp_width;
+        return $this;
     }
 
     /**
@@ -228,10 +240,12 @@ class TestConfig
 
     /**
      * @param int $vp_height
+     * @return TestConfig
      */
-    public function setVpHeight(int $vp_height): void
+    public function setVpHeight(int $vp_height): TestConfig
     {
         $this->vp_height = $vp_height;
+        return $this;
     }
 
     /**
@@ -244,10 +258,12 @@ class TestConfig
 
     /**
      * @param string $test_identifier
+     * @return TestConfig
      */
-    public function setTestIdentifier(string $test_identifier): void
+    public function setTestIdentifier(string $test_identifier): TestConfig
     {
         $this->test_identifier = $test_identifier;
+        return $this;
     }
 
     /**
@@ -260,10 +276,12 @@ class TestConfig
 
     /**
      * @param string $option
+     * @return TestConfig
      */
-    public function addChromeOption(string $option): void
+    public function addChromeOption(string $option): TestConfig
     {
         $this->arrChromeOptions[] = $option;
+        return $this;
     }
 
     /**

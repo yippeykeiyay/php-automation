@@ -17,14 +17,18 @@ class Utils
      */
     public static function out(string|array $msg, $newLine = true): void
     {
+        if ($newLine) {
+            echo PHP_EOL;
+        }
+
+        if ($newLine) {
+            echo vsprintf("[%s] ", [date('Y-m-d H:i:s')]);
+        }
+
         if (is_array($msg)) {
             print_r($msg);
         } else {
             echo $msg;
-        }
-
-        if ($newLine) {
-            echo PHP_EOL;
         }
     }
 
