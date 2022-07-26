@@ -62,6 +62,7 @@ class TestStrap
     {
         $run_time_s = round((microtime(true) - self::$_start), 3, PHP_ROUND_HALF_UP);
         Utils::out("Completed in $run_time_s seconds");
+        echo PHP_EOL;
 
         if ($this->RemoteWebDriver instanceof RemoteWebDriver) {
             // Quit the Selenium and browser session
