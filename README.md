@@ -1,5 +1,7 @@
 # Prerequisites
 
+I run this natively on a Mac so all these instructions are based on that. Shouldn't be too hard to rework for Linux/Windows though.
+
  * [Brew](https://brew.sh/)
  * Composer - `brew install composer`
  * PHP 7.4
